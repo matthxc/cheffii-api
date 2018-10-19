@@ -4,6 +4,7 @@ const cors = require('cors');
 const awsServerlessExpressMiddleware = require('aws-serverless-express/middleware');
 const swaggerUi = require('swagger-ui-express');
 const Boom = require('boom');
+const router = express.Router();
 
 const errorHandler = require('./middleware/errorHandler');
 
@@ -25,7 +26,7 @@ app.use(awsServerlessExpressMiddleware.eventContext());
 
 // App routes
 app.use('/ping', pingController);
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(docs));
+app.use('/api-docs', swaggerUi.serve, router.get('/', swaggerUi.setup(docs)));
 
 // Error Handling
 app.use('*', (req, res, next) => next(Boom.notFound()));

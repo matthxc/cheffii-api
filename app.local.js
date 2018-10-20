@@ -1,10 +1,11 @@
+const fs = require('fs');
 const app = require('./app');
 const awsConfig = require('./awsConfig');
+const awsCredentials = JSON.parse(
+  fs.readFileSync('./awsCredentials.json', 'utf8'),
+);
 
-awsConfig.update({
-  accessKeyId: 'AKIAIUVIGA727TCFBXGQ',
-  secretAccessKey: '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',
-});
+awsConfig.update(awsCredentials);
 
 const port = 8080;
 

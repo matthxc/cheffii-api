@@ -5,6 +5,7 @@ const Joi = require('joi');
 const AWS = require('aws-sdk');
 const atob = require('atob');
 const asyncMiddleware = require('../middleware/async');
+const awsConfig = require('../awsConfig');
 
 const router = express.Router();
 
@@ -32,7 +33,7 @@ router.post(
         Bytes: getBinary(image),
       },
     };
-    const rekognition = new AWS.Rekognition({ region: 'us-west-2' });
+    const rekognition = new AWS.Rekognition(awsConfig);
     try {
       const labels = await rekognition.detectLabels(params).promise();
       return res.status(httpStatus.OK).json(labels);
